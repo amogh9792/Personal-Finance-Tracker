@@ -1,7 +1,7 @@
 import pandas as pd
 import csv
 from datetime import datetime
-from data_entry import get_amount, get_category, get_date, get_description
+from data_entry import get_amount, get_category, get_date, get_description, date_format
 
 
 class CSV:
@@ -35,10 +35,35 @@ class CSV:
 
         print("Entry added successfully")
 
+    @classmethod
+    def get_transactions(cls, start_date, end_date):
+        df = pd.read_csv(cls.CSV_FILE)
+        df["date"] = pd.to_datetime(df["date"], format = date_format)
+        start_date = datetime.strptime(start_date, date_format)
+        end_date = datetime.strptime(end_date, date_format)
+        
+        mask = (df["date"] >= start_date) & (df["date"] <= end_date)
 
-# CSV.initialize_csv()
-# CSV.add_entry("20-07-2024", 125.65, "income", "Salary")
+        filtered_df = df.loc[mask]
 
+        if filtered_df.empty:
+            print("No transactions found in the given date range.")
+
+        else:
+            print(f"Transactions from {start_date.strftime(date_format)} to {end_date.strftime(date_format)}")
+
+            print(filtered_df.to_string(index = False, formatters = {"date": lambda x: x.strftime(date_format)}))
+
+            total_income = filtered_df[filtered_df["category"] == "Income"]["amount"].sum()
+            total_expense = filtered_df[filtered_df["category"] == "Expense"]["amount"].sum()
+
+            print("\n Summary:")
+            print(f"Total Income: ${total_income:.2f}")
+            print(f"Total Expense: ${total_expense:.2f}")
+            print(f"Net Savings: ${(total_income - total_expense):.2f}")
+        
+        return filtered_df
+    
 def add():
 
     CSV.initialize_csv()
@@ -48,4 +73,9 @@ def add():
     description = get_description()
     CSV.add_entry(date, amount, category, description)
 
-add()
+CSV.get_transactions("01-09-2025", "08-09-2025")
+# add()
+
+
+# CSV.initialize_csv()
+# CSV.add_entry("20-07-2024", 125.65, "income", "Salary")

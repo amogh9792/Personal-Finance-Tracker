@@ -23,6 +23,7 @@ def get_amount():
         if amount <= 0:
             raise ValueError("Amount must be a non-negative and non-zero value.")
         
+        return amount
     except ValueError as e:
         print(e)
         return get_amount()
