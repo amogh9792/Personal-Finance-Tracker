@@ -1,22 +1,30 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+import psycopg2
+import psycopg2.extras
+from contextlib import contextmanager
 from app.core.config import settings
+from app.utils.logger import logger
 
-
-engine = create_engine(settings.DATABASE_URL, connect_args={"check_same_thread": False} if settings.DATABASE_URL else {})
-
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-Base = declarative_base()
-
-# Dependancy for DB session
-
-def get_db():
-    db = SessionLocal()
+# Connection factory
+def get_connection():
     try:
+        conn = psycopg2.connect(settings.DATABASE_URL)
+        return conn
+    except Exception as e:
+        logger.error(f"Database connection failed: {str(e)}")
+        raise
 
-        yield db
-    
+# Context manager for transactions
+@contextmanager
+def get_cursor():
+    conn = get_connection()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    try:
+        yield cursor
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        logger.error(f"DB transaction failed: {str(e)}")
+        raise
     finally:
-
-        db.close()
+        cursor.close()
+        conn.close()
