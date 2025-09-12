@@ -1,8 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 from datetime import datetime
 from typing import Optional
 
-# User schemas
+# --- Users ---
 class UserCreate(BaseModel):
     username: str
     password: str
@@ -19,11 +19,19 @@ class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
 
-# Transaction schemas
+# --- Transactions ---
 class TransactionCreate(BaseModel):
     amount: float
-    category: str   # "Income" or "Expense"
+    category: str   # must be Income or Expense
     description: Optional[str] = None
+
+    @validator("category")
+    def validate_category(cls, v):
+        v = v.capitalize()   # normalize "income" → "Income"
+        if v not in ["Income", "Expense"]:
+            raise ValueError("Category must be 'Income' or 'Expense'")
+        return v
+
 
 class TransactionOut(TransactionCreate):
     id: int
