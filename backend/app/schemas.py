@@ -20,20 +20,22 @@ class Token(BaseModel):
     token_type: str = "bearer"
 
 # --- Transactions ---
+
+
 class TransactionCreate(BaseModel):
     amount: float
-    category: str   # must be Income or Expense
+    category_id: int       # use FK instead of text
     description: Optional[str] = None
 
-    @validator("category")
-    def validate_category(cls, v):
-        v = v.capitalize()   # normalize "income" → "Income"
-        if v not in ["Income", "Expense"]:
-            raise ValueError("Category must be 'Income' or 'Expense'")
-        return v
 
-
-class TransactionOut(TransactionCreate):
+class TransactionOut(BaseModel):
     id: int
     date: datetime
+    amount: float
+    category_id: int
+    category_name: Optional[str] = None  # join with categories.name
+    description: Optional[str] = None
     owner_id: int
+
+    class Config:
+        orm_mode = True
