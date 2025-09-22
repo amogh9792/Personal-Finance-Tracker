@@ -1,0 +1,27 @@
+# --- Core Framework ---
+fastapi==0.111.0             # Web framework
+uvicorn[standard]==0.30.1    # ASGI server with autoreload
+
+# --- Database & Config ---
+psycopg2-binary==2.9.9       # PostgreSQL driver
+python-dotenv==1.0.1         # Load environment variables from .env
+
+# --- Auth & Security ---
+python-jose==3.3.0           # JWT tokens
+passlib[bcrypt]==1.7.4       # Password hashing
+
+# --- Validation & Data Handling ---
+pydantic==2.7.4              # Data validation for FastAPI
+
+# --- Utilities ---
+requests==2.32.3             # HTTP client (optional, for external API calls)
+loguru==0.7.2                # Advanced logging (better than std logging)
+
+# --- Testing ---
+pytest==8.3.2                # Unit testing
+httpx==0.27.0                # For async API tests with FastAPI
+pytest-asyncio==0.23.8       # Async testing support
+
+# --- Dev Tools ---
+black==24.8.0                # Code formatter
+flake8==7.1.1                # Linting
