@@ -39,3 +39,16 @@ class TransactionOut(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class CategoryCreate(BaseModel):
+    name: str
+
+
+class CategoryOut(BaseModel):
+    id: int
+    name: str
+    user_id: int
+
+    class Config:
+        orm_mode = True

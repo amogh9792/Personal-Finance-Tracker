@@ -6,6 +6,8 @@ from app.core.exceptions import add_exception_handlers
 from app.db_init import init_db
 from app.routes import auth, transactions, admin
 from app.core.config import settings
+from app.routes import auth, transactions, categories
+
 
 # Initialize DB tables
 init_db()
@@ -43,6 +45,8 @@ add_exception_handlers(app)
 app.include_router(auth.router)
 app.include_router(transactions.router)
 app.include_router(admin.router)
+app.include_router(categories.router)
+
 
 @app.get("/")
 def root():
