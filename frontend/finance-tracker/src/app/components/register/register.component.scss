@@ -1,0 +1,14 @@
+@import '../login/login.component.scss'; // Reuse base styles
+
+h2 {
+  color: #28a745;
+}
+
+.btn-register {
+  background: #28a745;
+
+  &:hover {
+    background: #1e7e34;
+    transform: scale(1.05);
+  }
+}

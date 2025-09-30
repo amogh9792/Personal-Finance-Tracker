@@ -1,0 +1,98 @@
+.auth-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  animation: fadeIn 1s ease-in-out;
+}
+
+.auth-card {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 380px;
+  text-align: center;
+  transform: translateY(50px);
+  opacity: 0;
+  animation: slideUp 0.8s ease-out forwards;
+}
+
+h2 {
+  color: #0077cc;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+  text-align: left;
+
+  label {
+    display: block;
+    margin-bottom: 0.3rem;
+    color: #555;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+
+    &:focus {
+      border-color: #0077cc;
+      box-shadow: 0 0 10px rgba(0, 119, 204, 0.3);
+      transform: scale(1.02);
+    }
+  }
+}
+
+.btn {
+  width: 100%;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: transform 0.2s, background 0.3s;
+}
+
+.btn-login {
+  background: #0077cc;
+
+  &:hover {
+    background: #005fa3;
+    transform: scale(1.05);
+  }
+}
+
+.switch-text {
+  margin-top: 1rem;
+  color: #666;
+
+  a {
+    color: #0077cc;
+    text-decoration: none;
+    font-weight: bold;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}

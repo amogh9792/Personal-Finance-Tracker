@@ -1,0 +1,24 @@
+<h2>Admin Panel</h2>
+<p>Manage users</p>
+
+<table border="1" cellpadding="5">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Is Admin</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.id }}</td>
+      <td>{{ user.username }}</td>
+      <td>{{ user.is_admin ? '✅ Yes' : '❌ No' }}</td>
+      <td>
+        <button *ngIf="!user.is_admin" (click)="makeAdmin(user.id)">Make Admin</button>
+        <button *ngIf="user.is_admin" (click)="removeAdmin(user.id)">Remove Admin</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
